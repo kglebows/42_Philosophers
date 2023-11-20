@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/16 18:42:01 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:02:56 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,27 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+struct s_dt;
+
 /**
  * @brief Data structure representing spots around the philosophers
  * table. Contains philosophers and forks.
  * @param id Positive value is philosopher, negative value is fork
+ * @param dt Pointer to program main data
+ * @param philo Philosophers thread
+ * @param status 1 - Think 2 - Eat 3 - Sleep 4 - Dead -1 - Fork free -2 - Fork taken
+ * @param last_meal Time of last meal
  * @param left Fork/Philosopher on the left
  * @param right Fork/Philosopher on the right
  */
 typedef struct s_philo
 {
 	int					id;
+	struct s_dt			*dt;
+	pthread_t			philo;
+	pthread_mutex_t		lock;
+	int					status;
+	long long			last_meal;
 	struct s_philo		*left;
 	struct s_philo		*right;
 }						t_philo;
@@ -43,7 +54,7 @@ typedef struct s_philo
  * @param number_of_times_each_philosopher_must_eat a minimal value of meals
  * @param the_time_itself The thread tracking time
  * @param start_time Time of starting the program
- * @param time Running time in miliseconds.
+ * @param deadlock Mutex for dead philosopher
  * @param philo Pointer to the first philosopher
  */
 typedef struct s_dt
@@ -53,14 +64,18 @@ typedef struct s_dt
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					number_of_times_each_philosopher_must_eat;
-	pthread_t			the_time_itself;
+	pthread_mutex_t		timelock;
 	struct timeval		start_time;
-	long long			time;
+	pthread_mutex_t		deadlock;
 	t_philo				*philo;
 }						t_dt;
 
 
 void	ft_ini(int argn, char *argc[], t_dt *dt);
+
+long long ft_time(t_dt *dt);
+
+void	*ft_philo(void *data);
 
 /**
  * @brief Exit function in case of an error.

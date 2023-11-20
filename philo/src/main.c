@@ -6,35 +6,36 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/16 18:52:03 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:41:05 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void test_spots(t_dt *dt)
-{
-	t_philo		*spot;
-	int			i;
-
-	spot = dt->philo;
-	i = 0;
-	while (i < 4)
-	{
-		printf("%lld # ID : %d\n", dt->time, spot->id);
-		usleep(1000000);
-		spot = spot->right;
-		i++;
-	}
-	
-}
-
 int	main(int argn, char *argc[])
 {
 	t_dt				dt;
+	t_philo				*temp;
 
 	ft_ini(argn, argc, &dt);
-	test_spots(&dt);
-	ft_exit(&dt);
+	temp = dt.philo;
+	while (1)
+	{
+		pthread_mutex_lock(&temp->lock);
+		if (ft_time(&dt) - temp->last_meal >= dt.time_to_die)
+		{
+			printf("%lld %d died\n", ft_time(&dt), temp->id);
+			pthread_mutex_lock(&dt.deadlock);
+			pthread_mutex_lock(&dt.timelock);
+			ft_exit(&dt);
+			// philo->status = 4;
+			// // pthread_mutex_lock(&philo->dt->deadlock);
+			// // pthread_mutex_lock(&philo->dt->timelock);
+			// break ;
+		}
+		pthread_mutex_unlock(&temp->lock);
+		temp = temp->right;
+	}
+	// ft_exit(&dt);
 	return (0);
 }

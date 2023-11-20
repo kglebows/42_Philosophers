@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 19:29:04 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/16 11:57:53 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/19 15:01:16 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_error(int code, t_dt *dt)
 	else if (code == -4)
 		printf("Error! Failed to allocate memory!\n");
 	else if (code == -5)
-		printf("Error! \n");
+		printf("Error! Time mutex failure!\n");
 	else if (code == -6)
 		printf("Error! \n");
 	else if (code == -7)
