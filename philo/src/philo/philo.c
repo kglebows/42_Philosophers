@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:56:17 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/20 15:38:56 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:49:17 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_fork(t_philo *philo, t_philo *fork)
 {
 	pthread_mutex_lock(&fork->lock);
-	printf("%lld %d has taken a fork\n", ft_time(philo->dt), philo->id);
+	printf("%lld %d has taken a fork\n", ft_time(0, philo->dt), philo->id);
 }
 
 void	ft_eat(t_philo *philo)
@@ -26,17 +26,17 @@ void	ft_eat(t_philo *philo)
 		usleep(1000);
 	ft_fork(philo, philo->right);
 	ft_fork(philo, philo->left);
-	eat_time = ft_time(philo->dt);
+	eat_time = ft_time(0, philo->dt);
 	printf("%lld %d is eating\n", eat_time, philo->id);
-	while (ft_time(philo->dt) - eat_time < philo->dt->time_to_eat)
+	while (ft_time(0, philo->dt) - eat_time < philo->dt->time_to_eat)
 		;
 	pthread_mutex_unlock(&philo->right->lock);
 	pthread_mutex_unlock(&philo->left->lock);
-	philo->last_meal = ft_time(philo->dt);
+	philo->last_meal = ft_time(0, philo->dt);
 	printf("%lld %d is sleeping\n", philo->last_meal, philo->id);
-	while (ft_time(philo->dt) - philo->last_meal < philo->dt->time_to_sleep)
+	while (ft_time(0, philo->dt) - philo->last_meal < philo->dt->time_to_sleep)
 		;
-	printf("%lld %d is thinking\n", ft_time(philo->dt), philo->id);
+	printf("%lld %d is thinking\n", ft_time(0, philo->dt), philo->id);
 }
 
 void	*ft_philo(void *data)

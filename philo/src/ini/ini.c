@@ -6,13 +6,13 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:16:22 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/20 15:18:49 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:44:26 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long ft_time(t_dt *dt)
+long long ft_time(int last, t_dt *dt)
 {
 	int					state;
 	struct timeval		now;
@@ -23,7 +23,8 @@ long long ft_time(t_dt *dt)
 	state += gettimeofday(&now, NULL);
 	time = (now.tv_sec - dt->start_time.tv_sec) * 1000L +
 			(now.tv_usec - dt->start_time.tv_usec) / 1000L;
-	state += pthread_mutex_unlock(&dt->timelock);
+	if (last == 0)
+		state += pthread_mutex_unlock(&dt->timelock);
 	if (state > 0)
 		ft_error(-5, dt);
 	return (time);
@@ -53,7 +54,7 @@ t_philo	*create_philo(int id, t_dt *dt)
 	pthread_mutex_init(&philo->lock, NULL);
 	// pthread_create(&philo->philo, NULL, ft_philo, philo);
 	pthread_mutex_lock(&philo->lock);
-	philo->last_meal = ft_time(dt);
+	philo->last_meal = ft_time(0, dt);
 	pthread_mutex_unlock(&philo->lock);
 	philo->right = calloc(1, sizeof(t_philo));
 	if (!philo->right)

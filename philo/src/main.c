@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/20 15:41:05 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:50:42 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ int	main(int argn, char *argc[])
 	while (1)
 	{
 		pthread_mutex_lock(&temp->lock);
-		if (ft_time(&dt) - temp->last_meal >= dt.time_to_die)
+		if (ft_time(0, &dt) - temp->last_meal >= dt.time_to_die)
 		{
-			printf("%lld %d died\n", ft_time(&dt), temp->id);
-			pthread_mutex_lock(&dt.deadlock);
-			pthread_mutex_lock(&dt.timelock);
+			printf("%lld %d died\n", ft_time(1, &dt), temp->id);
+			pthread_mutex_unlock(&temp->lock);
 			ft_exit(&dt);
 			// philo->status = 4;
 			// // pthread_mutex_lock(&philo->dt->deadlock);
@@ -34,7 +33,7 @@ int	main(int argn, char *argc[])
 			// break ;
 		}
 		pthread_mutex_unlock(&temp->lock);
-		temp = temp->right;
+		temp = temp->right->right;
 	}
 	// ft_exit(&dt);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/20 12:02:56 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:48:20 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_dt
 
 void	ft_ini(int argn, char *argc[], t_dt *dt);
 
-long long ft_time(t_dt *dt);
+long long ft_time(int last, t_dt *dt);
 
 void	*ft_philo(void *data);
 
