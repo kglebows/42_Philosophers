@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:06:09 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/20 16:49:51 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/21 11:56:36 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	ft_exit(t_dt *dt)
 {
 	philosophers_go_byebye(dt);
 	free_spots(dt);
-	pthread_mutex_unlock(&dt->timelock);
 	pthread_mutex_destroy(&dt->timelock);
+	pthread_mutex_destroy(&dt->deadlock);
 	// system("leaks philo");
 	exit(0);
 }

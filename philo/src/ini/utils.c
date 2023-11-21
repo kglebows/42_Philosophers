@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 18:42:58 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/19 16:44:45 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:01:26 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ void	ft_ini_arguments(int argn, char *argc[], t_dt *dt)
 	dt->time_to_die = ft_atoi(argc[2], dt);
 	dt->time_to_eat = ft_atoi(argc[3], dt);
 	dt->time_to_sleep = ft_atoi(argc[4], dt);
+	dt->exit = 0;
+	dt->happy_philo = 0;
+	dt->start_time = 0;
 	if (argn == 6)
 		dt->number_of_times_each_philosopher_must_eat = ft_atoi(argc[5], dt);
 	else

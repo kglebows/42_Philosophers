@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 19:29:04 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/19 15:01:16 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:15:10 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ void	ft_error(int code, t_dt *dt)
 	else if (code == -5)
 		printf("Error! Time mutex failure!\n");
 	else if (code == -6)
-		printf("Error! \n");
+		printf("Error! Say mutex failure!\n");
 	else if (code == -7)
-		printf("Error! \n");
+		printf("Error! Create Philosopher mutex failure!\n");
 	else if (code == -8)
-		printf("Error! \n");
+		printf("Error! Thread starter failure!\n");
 	else if (code == -9)
-		printf("Error! \n");
+		printf("Error! Initialization mutex failure!\n");
 	else if (code == -10)
 		printf("Error! \n");
 	else if (code == -11)

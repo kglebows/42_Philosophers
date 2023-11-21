@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/20 16:48:20 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:01:53 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+# define FORK "has taken a fork"
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+# define DEAD "died"
+
 struct s_dt;
 
 /**
@@ -28,7 +34,8 @@ struct s_dt;
  * @param id Positive value is philosopher, negative value is fork
  * @param dt Pointer to program main data
  * @param philo Philosophers thread
- * @param status 1 - Think 2 - Eat 3 - Sleep 4 - Dead -1 - Fork free -2 - Fork taken
+ * @param lock Mutex for fork management and data racing prevention
+ * @param meals_had amount of meals eaten by the philosopher
  * @param last_meal Time of last meal
  * @param left Fork/Philosopher on the left
  * @param right Fork/Philosopher on the right
@@ -39,7 +46,8 @@ typedef struct s_philo
 	struct s_dt			*dt;
 	pthread_t			philo;
 	pthread_mutex_t		lock;
-	int					status;
+	int					meals_had;
+	int					happy;
 	long long			last_meal;
 	struct s_philo		*left;
 	struct s_philo		*right;
@@ -64,16 +72,19 @@ typedef struct s_dt
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					number_of_times_each_philosopher_must_eat;
+	int					happy_philo;
 	pthread_mutex_t		timelock;
-	struct timeval		start_time;
+	long long			start_time;
 	pthread_mutex_t		deadlock;
+	int					exit;
 	t_philo				*philo;
 }						t_dt;
 
 
 void	ft_ini(int argn, char *argc[], t_dt *dt);
 
-long long ft_time(int last, t_dt *dt);
+long long	ft_time(t_dt *dt);
+long long	ft_say(char *str, t_philo *philo);
 
 void	*ft_philo(void *data);
 
