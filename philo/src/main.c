@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/22 16:08:31 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:42:27 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	meal_counter(t_philo *philo)
 		}
 	}
 	pthread_mutex_unlock(&philo->lock);
-	if (i == 0 || philo->dt->happy_philo == philo->dt->number_of_philosophers)
+	if (i == 0 || philo->dt->happy_philo >= philo->dt->number_of_philosophers)
 	{
 		pthread_mutex_lock(&philo->dt->deadlock);
 		philo->dt->exit = 1;
@@ -58,6 +58,7 @@ int	main(int argn, char *argc[])
 		state = pthread_mutex_unlock(&philo->lock);
 		if (meal_counter(philo) == 1)
 			break ;
+		philo = philo->right->right;
 		usleep(1000);
 	}
 	ft_exit(&dt);
