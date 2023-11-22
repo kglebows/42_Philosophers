@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/21 16:01:53 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/22 14:06:12 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@
 # define DEAD "died"
 
 struct s_dt;
+
+/**
+ * @brief Data structure for mutex handling.
+ * @param id 0 - lock is free, other - lock is taken by # philosopher
+*/
+typedef struct s_mutex
+{
+	int					id;
+	pthread_mutex_t		lock;
+}						t_mutex;
 
 /**
  * @brief Data structure representing spots around the philosophers
@@ -82,6 +92,10 @@ typedef struct s_dt
 
 
 void	ft_ini(int argn, char *argc[], t_dt *dt);
+
+void	ft_mutex(t_mutex *lock, t_philo *philo);
+
+int	ft_strncmp(const char *s1, const char *s2);
 
 long long	ft_time(t_dt *dt);
 long long	ft_say(char *str, t_philo *philo);

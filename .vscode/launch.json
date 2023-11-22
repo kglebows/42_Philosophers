@@ -1,0 +1,21 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "(lldb) Launch",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "/Users/kglebows/Desktop/Workspace/42_Philosophers/philo/philo",
+			"args": [3 600 200 200 5],
+			"stopAtEntry": false,
+			"cwd": "/Users/kglebows/Desktop/Workspace/42_Philosophers/philo/",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "lldb"
+		}
+
+	]
+}

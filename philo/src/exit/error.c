@@ -6,48 +6,11 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 19:29:04 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/21 16:15:10 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/22 14:32:26 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	error__(int code, t_dt *dt)
-{
-	if (code == -23)
-		printf("Error! \n");
-	else
-		printf("Error! Error code missing!\n");
-	(void)dt;
-}
-
-void	error_(int code, t_dt *dt)
-{
-	if (code == -12)
-		printf("Error! \n");
-	else if (code == -13)
-		printf("Error! \n");
-	else if (code == -14)
-		printf("Error! \n");
-	else if (code == -15)
-		printf("Error! \n");
-	else if (code == -16)
-		printf("Error! \n");
-	else if (code == -17)
-		printf("Error! \n");
-	else if (code == -18)
-		printf("Error! \n");
-	else if (code == -19)
-		printf("Error! \n");
-	else if (code == -20)
-		printf("Error! \n");
-	else if (code == -21)
-		printf("Error! \n");
-	else if (code == -22)
-		printf("Error! \n");
-	else
-		error__(code, dt);
-}
 
 void	ft_error(int code, t_dt *dt)
 {
@@ -70,10 +33,9 @@ void	ft_error(int code, t_dt *dt)
 	else if (code == -9)
 		printf("Error! Initialization mutex failure!\n");
 	else if (code == -10)
-		printf("Error! \n");
-	else if (code == -11)
-		printf("Error! \n");
+		printf("Error! Philosopher thread mutex failure!\n");
+	if (code < -2)
+		ft_exit(dt);
 	else
-		error_(code, dt);
-	ft_exit(dt);
+		exit(0);
 }

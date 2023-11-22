@@ -6,7 +6,7 @@
 #    By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 18:20:23 by kglebows          #+#    #+#              #
-#    Updated: 2023/11/17 11:01:03 by kglebows         ###   ########.fr        #
+#    Updated: 2023/11/22 14:03:32 by kglebows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCDIR = ./src
 SRCS	= main.c \
 		exit/error.c exit/exit.c \
 		ini/ini.c ini/utils.c \
-		philo/philo.c
+		philo/philo.c philo/utils.c
 
 OBJS	= $(SRCS:%.c=$(OBJDIR)/%.o)
 
