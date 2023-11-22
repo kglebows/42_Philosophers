@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:06:09 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/22 13:22:08 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:19:56 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ void	philosophers_go_byebye(t_dt *dt)
 	i = 0;
 	while (i < dt->number_of_philosophers)
 	{
-		pthread_mutex_destroy(&spot->lock);
+		// pthread_mutex_destroy(&spot->lock);
 		pthread_join(spot->philo, NULL);
 		// pthread_detach(spot->philo);
 		spot = spot->right->right;
 		i++;
+		usleep(200);
 	}
 }
 

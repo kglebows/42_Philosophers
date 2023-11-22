@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/22 14:55:41 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:08:31 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	meal_counter(t_philo *philo)
 {
 	int				i;
 
+	pthread_mutex_lock(&philo->lock);
 	i = philo->dt->number_of_times_each_philosopher_must_eat;
 	if (i > 0 && philo->happy == 0)
 	{
@@ -25,11 +26,11 @@ int	meal_counter(t_philo *philo)
 			philo->happy = 1;
 		}
 	}
+	pthread_mutex_unlock(&philo->lock);
 	if (i == 0 || philo->dt->happy_philo == philo->dt->number_of_philosophers)
 	{
 		pthread_mutex_lock(&philo->dt->deadlock);
 		philo->dt->exit = 1;
-		pthread_mutex_unlock(&philo->lock);
 		return (1);
 	}
 	return (0);
@@ -48,10 +49,10 @@ int	main(int argn, char *argc[])
 		state = pthread_mutex_lock(&philo->lock);
 		if (ft_time(&dt) - philo->last_meal >= dt.time_to_die)
 		{
+			state += pthread_mutex_unlock(&philo->lock);
 			state += pthread_mutex_lock(&dt.deadlock);
 			dt.exit = 1;
 			printf("%lld %d %s\n", ft_time(philo->dt), philo->id, DEAD);
-			state += pthread_mutex_unlock(&philo->lock);
 			break ;
 		}
 		state = pthread_mutex_unlock(&philo->lock);
