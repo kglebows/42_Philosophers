@@ -6,11 +6,24 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 18:42:58 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/21 16:01:26 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/24 15:09:14 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*result;
+
+	if (count && (count * size) / count != size)
+		return (0);
+	result = malloc(count * size);
+	if (!result)
+		return (0);
+	ft_bzero(result, count * size);
+	return (result);
+}
 
 int	ft_isdigit(int c)
 {
@@ -70,4 +83,12 @@ void	ft_ini_arguments(int argn, char *argc[], t_dt *dt)
 		dt->number_of_times_each_philosopher_must_eat = ft_atoi(argc[5], dt);
 	else
 		dt->number_of_times_each_philosopher_must_eat = -1;
+	if (dt->number_of_times_each_philosopher_must_eat == 0)
+		ft_error(-4, dt);
+	if (dt->number_of_philosophers == 0)
+		ft_error(-5, dt);
+	if (dt->time_to_die == 0 || dt->time_to_die == 0 || dt->time_to_sleep == 0)
+		ft_error(-6, dt);
+	if (dt->number_of_philosophers == 1)
+		ft_error(-7, dt);
 }

@@ -9,7 +9,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "/Users/kglebows/Desktop/Workspace/42_Philosophers/philo/philo",
-			"args": [3 600 200 200 5],
+			"args": [5 160 160 160],
 			"stopAtEntry": false,
 			"cwd": "/Users/kglebows/Desktop/Workspace/42_Philosophers/philo/",
 			"environment": [],

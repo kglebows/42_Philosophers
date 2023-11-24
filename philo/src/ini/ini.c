@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:16:22 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/22 14:04:18 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/24 15:21:16 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_philo	*create_philo(int id, t_dt *dt)
 	t_philo			*philo;
 	int				state;
 
-	philo = calloc(1, sizeof(t_philo));
+	philo = ft_calloc(1, sizeof(t_philo));
 	if (!philo)
 		ft_error(-4, dt);
 	philo->dt = dt;
@@ -46,14 +46,14 @@ t_philo	*create_philo(int id, t_dt *dt)
 	philo->happy = 0;
 	philo->last_meal = ft_time(dt);
 	state += pthread_mutex_unlock(&philo->lock);
-	philo->right = calloc(1, sizeof(t_philo));
+	philo->right = ft_calloc(1, sizeof(t_philo));
 	if (!philo->right)
 		ft_error(-4, dt);
 	philo->right->id = id * -1;
 	state += pthread_mutex_init(&philo->right->lock, NULL);
 	philo->right->left = philo;
 	if (state != 0)
-		ft_error(-7, dt);
+		ft_error(-17, dt);
 	return (philo);
 }
 
@@ -71,7 +71,7 @@ void	start_threads(t_dt *dt)
 		spot = spot->right;
 	}
 	if (state != 0)
-		ft_error(-8, dt);
+		ft_error(-18, dt);
 }
 
 void	create_round_table(t_dt *dt)
@@ -86,7 +86,6 @@ void	create_round_table(t_dt *dt)
 	{
 		spot->right = create_philo(i, dt);
 		spot->right->left = spot;
-		
 		spot = spot->right->right;
 		i++;
 	}
@@ -109,5 +108,5 @@ void	ft_ini(int argn, char *argc[], t_dt *dt)
 	state += pthread_mutex_init(&dt->deadlock, NULL);
 	start_threads(dt);
 	if (state != 0)
-		ft_error(-9, dt);
+		ft_error(-19, dt);
 }

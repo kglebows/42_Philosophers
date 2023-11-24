@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:06:09 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/22 16:19:56 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/24 15:20:35 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ void	philosophers_go_byebye(t_dt *dt)
 	int			i;
 	t_philo		*spot;
 
-	// pthread_mutex_unlock(&dt->deadlock);
 	spot = dt->philo;
 	i = 0;
 	while (i < dt->number_of_philosophers)
 	{
-		// pthread_mutex_destroy(&spot->lock);
-		pthread_join(spot->philo, NULL);
-		// pthread_detach(spot->philo);
+		(void) pthread_join(spot->philo, NULL);
 		spot = spot->right->right;
 		i++;
 		usleep(200);
@@ -54,6 +51,5 @@ void	ft_exit(t_dt *dt)
 	free_spots(dt);
 	pthread_mutex_destroy(&dt->timelock);
 	pthread_mutex_destroy(&dt->deadlock);
-	// system("leaks philo");
 	exit(0);
 }

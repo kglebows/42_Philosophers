@@ -6,17 +6,16 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/22 16:42:27 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/24 15:12:55 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	meal_counter(t_philo *philo)
+void	meal_counter(t_philo *philo)
 {
 	int				i;
 
-	pthread_mutex_lock(&philo->lock);
 	i = philo->dt->number_of_times_each_philosopher_must_eat;
 	if (i > 0 && philo->happy == 0)
 	{
@@ -26,11 +25,30 @@ int	meal_counter(t_philo *philo)
 			philo->happy = 1;
 		}
 	}
-	pthread_mutex_unlock(&philo->lock);
-	if (i == 0 || philo->dt->happy_philo >= philo->dt->number_of_philosophers)
+}
+
+int	end(t_philo *philo)
+{
+	int					state;
+
+	state = 0;
+	if (ft_time(philo->dt) - philo->last_meal >= philo->dt->time_to_die)
 	{
-		pthread_mutex_lock(&philo->dt->deadlock);
+		state += pthread_mutex_unlock(&philo->lock);
+		state += pthread_mutex_lock(&philo->dt->deadlock);
 		philo->dt->exit = 1;
+		if (state != 0)
+			ft_error(-11, philo->dt);
+		printf("%lld %d %s\n", ft_time(philo->dt), philo->id, DEAD);
+		return (1);
+	}
+	if (philo->dt->happy_philo >= philo->dt->number_of_philosophers)
+	{
+		state += pthread_mutex_unlock(&philo->lock);
+		state += pthread_mutex_lock(&philo->dt->deadlock);
+		philo->dt->exit = 1;
+		if (state != 0)
+			ft_error(-11, philo->dt);
 		return (1);
 	}
 	return (0);
@@ -47,17 +65,10 @@ int	main(int argn, char *argc[])
 	while (1)
 	{
 		state = pthread_mutex_lock(&philo->lock);
-		if (ft_time(&dt) - philo->last_meal >= dt.time_to_die)
-		{
-			state += pthread_mutex_unlock(&philo->lock);
-			state += pthread_mutex_lock(&dt.deadlock);
-			dt.exit = 1;
-			printf("%lld %d %s\n", ft_time(philo->dt), philo->id, DEAD);
+		meal_counter(philo);
+		if (end(philo) == 1)
 			break ;
-		}
 		state = pthread_mutex_unlock(&philo->lock);
-		if (meal_counter(philo) == 1)
-			break ;
 		philo = philo->right->right;
 		usleep(1000);
 	}

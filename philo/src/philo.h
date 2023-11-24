@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/22 14:06:12 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/24 15:17:10 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,7 @@
 # define THINK "is thinking"
 # define DEAD "died"
 
-struct s_dt;
-
-/**
- * @brief Data structure for mutex handling.
- * @param id 0 - lock is free, other - lock is taken by # philosopher
-*/
-typedef struct s_mutex
-{
-	int					id;
-	pthread_mutex_t		lock;
-}						t_mutex;
+struct	s_dt;
 
 /**
  * @brief Data structure representing spots around the philosophers
@@ -70,9 +60,11 @@ typedef struct s_philo
  * @param time_to_eat time that takes philosopher to eat
  * @param time_to_sleep time that takes philosopher to sleep after eating
  * @param number_of_times_each_philosopher_must_eat a minimal value of meals
- * @param the_time_itself The thread tracking time
+ * @param happy_philo 1 - Philosopher has eaten requierd amount of meals
+ * @param timelock The mutex for tracking time
  * @param start_time Time of starting the program
- * @param deadlock Mutex for dead philosopher
+ * @param deadlock Mutex for dead philosopher and exiting program
+ * @param exit 1 - Program is in exit stage
  * @param philo Pointer to the first philosopher
  */
 typedef struct s_dt
@@ -90,26 +82,20 @@ typedef struct s_dt
 	t_philo				*philo;
 }						t_dt;
 
-
-void	ft_ini(int argn, char *argc[], t_dt *dt);
-
-void	ft_mutex(t_mutex *lock, t_philo *philo);
-
-int	ft_strncmp(const char *s1, const char *s2);
-
+void		ft_ini(int argn, char *argc[], t_dt *dt);
+void		*ft_calloc(size_t count, size_t size);
+void		ft_bzero(void *s, size_t n);
+int			ft_strncmp(const char *s1, const char *s2);
 long long	ft_time(t_dt *dt);
 long long	ft_say(char *str, t_philo *philo);
-
-void	*ft_philo(void *data);
+void		*ft_philo(void *data);
+void		ft_ini_arguments(int argn, char *argc[], t_dt *dt);
 
 /**
  * @brief Exit function in case of an error.
  * @param[in] code Error code for displaying exit message.
 */
-void	ft_error(int code, t_dt *dt);
-void	ft_exit(t_dt *dt);
-
-void	ft_ini_arguments(int argn, char *argc[], t_dt *dt);
-
+void		ft_error(int code, t_dt *dt);
+void		ft_exit(t_dt *dt);
 
 #endif
