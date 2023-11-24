@@ -6,15 +6,16 @@
 #    By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 18:20:23 by kglebows          #+#    #+#              #
-#    Updated: 2023/11/24 15:19:18 by kglebows         ###   ########.fr        #
+#    Updated: 2023/11/24 15:45:23 by kglebows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -fsanitize=thread -g
-# CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra 
+
+# CFLAGS = -Wall -Werror -Wextra -fsanitize=thread -g
 
 OBJDIR = ./bin
 SRCDIR = ./src

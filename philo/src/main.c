@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/24 15:12:55 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/24 15:43:13 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,16 @@ int	main(int argn, char *argc[])
 {
 	t_dt				dt;
 	t_philo				*philo;
-	int					state;
 
 	ft_ini(argn, argc, &dt);
 	philo = dt.philo;
 	while (1)
 	{
-		state = pthread_mutex_lock(&philo->lock);
+		pthread_mutex_lock(&philo->lock);
 		meal_counter(philo);
 		if (end(philo) == 1)
 			break ;
-		state = pthread_mutex_unlock(&philo->lock);
+		pthread_mutex_unlock(&philo->lock);
 		philo = philo->right->right;
 		usleep(1000);
 	}

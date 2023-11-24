@@ -6,29 +6,46 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:56:17 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/24 15:21:59 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/24 16:22:31 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+
+int	oddeven(t_philo *philo)
+{
+	int			state;
+
+	if (philo->id % 2 == 1)
+	{
+		state = pthread_mutex_lock(&philo->right->lock);
+		ft_say(FORK, philo);
+		state += pthread_mutex_lock(&philo->left->lock);
+		ft_say(FORK, philo);
+	}
+	else
+	{
+		usleep(200); // should fix the desync
+		state = pthread_mutex_lock(&philo->right->lock);
+		ft_say(FORK, philo);
+		state += pthread_mutex_lock(&philo->left->lock);
+		ft_say(FORK, philo);
+	}
+	return (state);
+}
 
 int	routine(t_philo *philo)
 {
 	int					state;
 	long long			time;
 
-	state = pthread_mutex_lock(&philo->right->lock);
-	ft_say(FORK, philo);
-	state += pthread_mutex_lock(&philo->left->lock);
-	ft_say(FORK, philo);
+	state = oddeven(philo);
 	time = ft_say(EAT, philo);
 	while (ft_time(philo->dt) - time < philo->dt->time_to_eat)
 		usleep(200);
 	state += pthread_mutex_unlock(&philo->right->lock);
 	state += pthread_mutex_unlock(&philo->left->lock);
-	state += pthread_mutex_lock(&philo->lock);
-	philo->meals_had++;
-	state += pthread_mutex_unlock(&philo->lock);
 	ft_say(SLEEP, philo);
 	while (ft_time(philo->dt) - philo->last_meal
 		< philo->dt->time_to_sleep + philo->dt->time_to_eat)
