@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:56:17 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/24 16:22:31 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/12/05 20:59:48 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ int	oddeven(t_philo *philo)
 {
 	int			state;
 
-	if (philo->id % 2 == 1)
+	if (philo->id % 2 == 0)
 	{
-		state = pthread_mutex_lock(&philo->right->lock);
+		state = pthread_mutex_lock(&philo->left->lock);
 		ft_say(FORK, philo);
-		state += pthread_mutex_lock(&philo->left->lock);
+		state += pthread_mutex_lock(&philo->right->lock);
 		ft_say(FORK, philo);
 	}
 	else
 	{
-		usleep(200); // should fix the desync
+		usleep(600); // should fix the desync
 		state = pthread_mutex_lock(&philo->right->lock);
 		ft_say(FORK, philo);
 		state += pthread_mutex_lock(&philo->left->lock);
@@ -40,17 +40,22 @@ int	routine(t_philo *philo)
 	int					state;
 	long long			time;
 
-	state = oddeven(philo);
-	time = ft_say(EAT, philo);
-	while (ft_time(philo->dt) - time < philo->dt->time_to_eat)
-		usleep(200);
-	state += pthread_mutex_unlock(&philo->right->lock);
-	state += pthread_mutex_unlock(&philo->left->lock);
-	ft_say(SLEEP, philo);
-	while (ft_time(philo->dt) - philo->last_meal
-		< philo->dt->time_to_sleep + philo->dt->time_to_eat)
-		usleep(200);
-	ft_say(THINK, philo);
+	if (philo->happy == 0)
+	{
+		state = oddeven(philo);
+		time = ft_say(EAT, philo);
+		while (ft_time(philo->dt) - time < philo->dt->time_to_eat)
+			usleep(200);
+		state += pthread_mutex_unlock(&philo->right->lock);
+		state += pthread_mutex_unlock(&philo->left->lock);
+		ft_say(SLEEP, philo);
+		while (ft_time(philo->dt) - philo->last_meal
+			< philo->dt->time_to_sleep + philo->dt->time_to_eat)
+			usleep(200);
+		ft_say(THINK, philo);
+	}
+	else
+		state = 0;
 	return (state);
 }
 

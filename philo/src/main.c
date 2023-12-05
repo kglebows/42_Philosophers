@@ -6,26 +6,26 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/24 15:43:13 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/12/05 20:50:48 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	meal_counter(t_philo *philo)
-{
-	int				i;
+// void	meal_counter(t_philo *philo)
+// {
+// 	int				i;
 
-	i = philo->dt->number_of_times_each_philosopher_must_eat;
-	if (i > 0 && philo->happy == 0)
-	{
-		if (philo->meals_had >= i)
-		{
-			philo->dt->happy_philo++;
-			philo->happy = 1;
-		}
-	}
-}
+// 	i = philo->dt->number_of_times_each_philosopher_must_eat;
+// 	if (i > 0 && philo->happy == 0)
+// 	{
+// 		if (philo->meals_had >= i)
+// 		{
+// 			philo->dt->happy_philo++;
+// 			philo->happy = 1;
+// 		}
+// 	}
+// }
 
 int	end(t_philo *philo)
 {
@@ -64,7 +64,7 @@ int	main(int argn, char *argc[])
 	while (1)
 	{
 		pthread_mutex_lock(&philo->lock);
-		meal_counter(philo);
+		// meal_counter(philo);
 		if (end(philo) == 1)
 			break ;
 		pthread_mutex_unlock(&philo->lock);

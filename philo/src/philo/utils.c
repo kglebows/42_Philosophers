@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:17:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/24 16:22:17 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/12/05 20:53:19 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ long long	ft_say(char *str, t_philo *philo)
 		state += pthread_mutex_lock(&philo->lock);
 		philo->last_meal = time;
 		philo->meals_had++;
+		if (philo->meals_had == philo->dt->must_eat)
+		{
+			philo->happy++;
+			philo->dt->happy_philo++;
+		}
 		state += pthread_mutex_unlock(&philo->lock);
 	}
 	state += pthread_mutex_unlock(&philo->dt->deadlock);

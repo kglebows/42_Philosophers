@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/24 15:17:10 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/12/05 20:51:50 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_philo
  * @param time_to_die time without eating that philosopher can survive
  * @param time_to_eat time that takes philosopher to eat
  * @param time_to_sleep time that takes philosopher to sleep after eating
- * @param number_of_times_each_philosopher_must_eat a minimal value of meals
+ * @param must_eat number of times each philospher must eat
  * @param happy_philo 1 - Philosopher has eaten requierd amount of meals
  * @param timelock The mutex for tracking time
  * @param start_time Time of starting the program
@@ -73,7 +73,7 @@ typedef struct s_dt
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
-	int					number_of_times_each_philosopher_must_eat;
+	int					must_eat;
 	int					happy_philo;
 	pthread_mutex_t		timelock;
 	long long			start_time;
