@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/12/05 20:51:50 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:04:57 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_philo
  * @param timelock The mutex for tracking time
  * @param start_time Time of starting the program
  * @param deadlock Mutex for dead philosopher and exiting program
+ * @param happylock Mutex for happy, well fed philosophers
  * @param exit 1 - Program is in exit stage
  * @param philo Pointer to the first philosopher
  */
@@ -78,6 +79,7 @@ typedef struct s_dt
 	pthread_mutex_t		timelock;
 	long long			start_time;
 	pthread_mutex_t		deadlock;
+	pthread_mutex_t		happylock;
 	int					exit;
 	t_philo				*philo;
 }						t_dt;

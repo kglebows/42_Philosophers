@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:17:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/12/06 13:18:00 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:06:03 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ long long	ft_time(t_dt *dt)
 	return (time);
 }
 
+void	happy_end(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->dt->happylock);
+	philo->happy++;
+	philo->dt->happy_philo++;
+	if (philo->dt->happy_philo == philo->dt->number_of_philosophers)
+		philo->dt->exit = 1;
+	pthread_mutex_unlock(&philo->dt->happylock);
+}
+
 long long	ft_say(char *str, t_philo *philo)
 {
 	long long		time;
@@ -43,10 +53,7 @@ long long	ft_say(char *str, t_philo *philo)
 		philo->last_meal = time;
 		philo->meals_had++;
 		if (philo->meals_had == philo->dt->must_eat)
-		{
-			philo->happy++;
-			philo->dt->happy_philo++;
-		}
+			happy_end(philo);
 		state += pthread_mutex_unlock(&philo->lock);
 	}
 	state += pthread_mutex_unlock(&philo->dt->deadlock);

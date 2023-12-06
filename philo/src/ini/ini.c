@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:16:22 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/24 15:21:16 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:05:21 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	ft_ini(int argn, char *argc[], t_dt *dt)
 	create_round_table(dt);
 	dt->start_time = ft_time(dt);
 	state += pthread_mutex_init(&dt->deadlock, NULL);
+	state += pthread_mutex_init(&dt->happylock, NULL);
 	start_threads(dt);
 	if (state != 0)
 		ft_error(-19, dt);
