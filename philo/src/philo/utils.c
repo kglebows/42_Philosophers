@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:17:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/12/05 20:53:19 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:18:00 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ long long	ft_say(char *str, t_philo *philo)
 
 	state = pthread_mutex_lock(&philo->dt->deadlock);
 	time = ft_time(philo->dt);
-	if (philo->dt->exit == 0)
+	if (philo->dt->exit == 0
+		&& philo->dt->happy_philo != philo->dt->number_of_philosophers)
 		printf("%lld %d %s\n", time, philo->id, str);
 	if (ft_strncmp(EAT, str) == 0)
 	{

@@ -6,12 +6,11 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:56:17 by kglebows          #+#    #+#             */
-/*   Updated: 2023/12/05 20:59:48 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:17:15 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 int	oddeven(t_philo *philo)
 {
@@ -26,7 +25,7 @@ int	oddeven(t_philo *philo)
 	}
 	else
 	{
-		usleep(600); // should fix the desync
+		usleep(600);
 		state = pthread_mutex_lock(&philo->right->lock);
 		ft_say(FORK, philo);
 		state += pthread_mutex_lock(&philo->left->lock);
